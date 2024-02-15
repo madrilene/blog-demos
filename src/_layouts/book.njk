@@ -9,6 +9,24 @@ key: '{{ item.work.key | replace("/works/", "") }}'
 
   <h1 class="feature">{{ item.work.title }}</h1>
 
+  <h2>book infos</h2>
+
+  <p>first sentence: {{ item.bookData.first_sentence.value }}</p>
+
+  <p>description: {{ item.bookData.description }}</p>
+
+  <p>subjects: {{ item.bookData.subjects }}</p>
+
+  <h2>Author infos</h2>
+
+  <p>birth: {{ item.authorData.birth_date }}</p>
+  <p>death: {{ item.authorData.death_date }}</p>
+
+  <p>{{ item.authorData.bio }}</p>
+  <p>{{ item.authorData.bio.value }}</p>
+
+  <p>{{ item.authorData.wikipedia }}</p>
+
   {% set authorImageUrl = "./src/assets/images/authors/" + (item.work.author_keys[0] | replace('/authors/', '') + "-L.jpg") %}
   {% eleventyImage authorImageUrl, "Alt or Title", null, "eager" %}
 

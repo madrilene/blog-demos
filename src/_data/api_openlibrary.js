@@ -15,10 +15,32 @@ module.exports = async function () {
     await fs.mkdir(outputDir, {recursive: true});
 
     for (let entry of data.reading_log_entries) {
-      let authorKey = entry.work.author_keys[0].replace('/authors/', '');
-      let imagePath = path.join(outputDir, `${authorKey}-L.jpg`);
+      // get book key
+      let bookKey = entry.work.key.replace('/works/', '');
 
-      // Check if the image file already exists
+      // get book endpoint and data
+      let bookEndpoint = `https://openlibrary.org/works/${bookKey}.json`;
+      let bookData = await EleventyFetch(bookEndpoint, {
+        duration: '1d',
+        type: 'json'
+      });
+
+      entry.bookData = bookData;
+
+      // get author key
+      let authorKey = entry.work.author_keys[0].replace('/authors/', '');
+
+      // get author endpoint and data
+      let authorEndpoint = `https://openlibrary.org/authors/${authorKey}.json`;
+      let authorData = await EleventyFetch(authorEndpoint, {
+        duration: '1d',
+        type: 'json'
+      });
+
+      entry.authorData = authorData;
+
+      // get path to author image and store in input folder
+      let imagePath = path.join(outputDir, `${authorKey}-L.jpg`);
       try {
         await fs.access(imagePath);
         entry.authorImageUrl = `/assets/images/authors/${authorKey}-L.jpg`;
@@ -29,6 +51,13 @@ module.exports = async function () {
         });
         await fs.writeFile(imagePath, imageData);
         entry.authorImageUrl = `/assets/images/authors/${authorKey}-L.jpg`;
+
+        // if (imageData.byteLength < 10240) {
+        //   console.log(`Image ${imageUrl} is smaller than 10KB. Skipping.`);
+        // } else {
+        //   await fs.writeFile(imagePath, imageData);
+        //   entry.authorImageUrl = `/assets/images/authors/${authorKey}-L.jpg`;
+        // }
       }
     }
 
