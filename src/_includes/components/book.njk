@@ -1,0 +1,8 @@
+<li class="card">
+  <div class="flow">
+    <h3>
+      <a href="books/{{ item.work.title | slugify }}">{{ item.work.title }}</a>
+    </h3>
+    <p class="text-step-min-1">{{ item.work.first_publish_year }}</p>
+  </div>
+</li>
