@@ -3,13 +3,7 @@ layout: base
 masonry: true
 ---
 
-<div class="wrapper">
-  <header class="full | section" style="--spot-color: var(--color-primary)">
-    <div class="section__inner flow region">
-      <h1 class="text-center text-base-light">{{ title }}</h1>
-    </div>
-    {% include 'svg/divider-waves.svg' %}
-  </header>
+
 
   <article class="full | region">
     <div class="wrapper flow prose">{{ content | safe }}</div>
@@ -24,6 +18,25 @@ masonry: true
         <p>{{ blog.intro }}</p>
       {% endif %}
 
+
+			<!-- API -->
+
+			<ul
+			class="feature | grid region"
+			role="list"
+			data-rows="masonry"
+			data-layout="50-50"
+			>
+			<!-- loop posts -->
+			{% set itemList = api_openlibrary.reading_log_entries %}
+			{% for item in itemList %}
+				<!-- book -->
+				{% include 'components/book.njk' %}
+			{% endfor %}
+			</ul>
+
+			<!-- blog posts -->
+
       <ul
         class="feature | grid region"
         role="list"
@@ -32,7 +45,7 @@ masonry: true
       >
         <!-- loop posts -->
         {% set itemList = collections.posts %}
-        {% for item in itemList.slice(0, 4) %}
+        {% for item in itemList %}
           <!-- activate tags -->
           {% set activateTags = true %}
           <!-- set heading context -->
@@ -44,3 +57,5 @@ masonry: true
     </div>
   </section>
 </div>
+
+

@@ -3,39 +3,40 @@ layout: base
 schema: blog
 ---
 
-<article class="region blog" style="--region-space-top: var(--space-xl-2xl)">
-  <div class="wrapper flow prose">
-    <h1 class="gradient-text">{{ title }}</h1>
+<article class="region wrapper flow">
+  <a class="back-home" href="/">Back home</a>
 
-    {% if image %}
-      <!-- image -->
-      {% eleventyImage image, alt or title, null, "eager", "feature" %}
-    {% endif %}
+  <h1 class="feature">{{ title }}</h1>
+
+  {% if image %}
+    <!-- image -->
+    {% eleventyImage image, alt or title, null, "eager" %}
+  {% endif %}
+  {%
+    if
+    credit
+  %}
+    <!-- credit -->
+    <p class="credit popout | text-step-min-1">© {{ credit }}</p>
+  {% endif %}
+
+  <p class="meta | cluster" style="--gutter: var(--space-xs-s)">
+    Published:
+    <!-- date -->
+    {% set definedDate = date %} {% include "components/date.njk" %}
     {%
-      if
-      credit
+      if tags.length >
+      1
     %}
-      <!-- credit -->
-      <p class="credit feature | text-step-min-1">© {{ credit }}</p>
+      <!-- tags -->
+      {% for tag in tags %}{% if tag != "posts" %}
+        <a class="button post-tag" href="/tags/{{ tag }}"> {{ tag }} </a>
+      {% endif %}{% endfor %}
     {% endif %}
+  </p>
 
-    <p class="meta | cluster" style="--gutter: var(--space-xs-s)">
-      <!-- date -->
-      {% set definedDate = date %} {% include "components/date.njk" %}
-      {%
-        if tags.length >
-        1
-      %}
-        <!-- tags -->
-        {% for tag in tags %}{% if tag != "posts" %}
-          <a class="button post-tag" href="/tags/{{ tag }}"> {{ tag }} </a>
-        {% endif %}{% endfor %}
-      {% endif %}
-    </p>
-
-    {{ content | safe }}
-    {% include 'components/edit-on.njk' %}
-  </div>
+  {{ content | safe }}
+  {% include 'components/edit-on.njk' %}
 
   <!--  h-card infos: https://indieweb.org/authorship -->
   <div hidden class="h-entry">

@@ -1,0 +1,22 @@
+---
+layout: base
+schema: blog
+key: '{{ item.work.key | replace("/works/", "") }}'
+---
+
+<article class="region wrapper flow">
+  <a class="back-home" href="/">Back home</a>
+
+  <h1 class="feature">{{ item.work.title }}</h1>
+
+  {% set authorImageUrl = "./src/assets/images/authors/" + (item.work.author_keys[0] | replace('/authors/', '') + "-L.jpg") %}
+  {% eleventyImage authorImageUrl, "Alt or Title", null, "eager" %}
+
+  <!-- credit -->
+  <p class="credit popout | text-step-min-1">© {{ item.work.author_names[0] }}</p>
+
+  <p class="meta">First published: {{ item.work.first_publish_year }}</p>
+
+  {{ content | safe }}
+  {% include 'components/edit-on.njk' %}
+</article>
