@@ -29,7 +29,6 @@ h3 {
   line-height: 1.2;
   letter-spacing: var(--tracking-s);
   font-weight: 700;
-  font-family: var(--font-display);
 }
 
 h1 {
