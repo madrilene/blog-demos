@@ -1,6 +1,6 @@
 module.exports = {
   url: process.env.URL || 'http://localhost:8080',
-  siteName: 'Eleventy Excellent',
+  siteName: 'Books',
   siteDescription:
     'Eleventy starter built around the CSS workflow suggested by buildexcellentwebsit.es',
   siteType: 'Person', // schema
